@@ -21,4 +21,9 @@ public class SmartPhone extends Prodotto {
         return this.memoria;
     }
 
+    @Override
+    public String getNomeConCodice() {
+        return super.getNomeConCodice() + "\nCodiceImei : " + getCodiceImei() + "\nMemoriaGB : " + getMemoria();
+    }
+
 }
