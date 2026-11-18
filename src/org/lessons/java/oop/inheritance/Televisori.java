@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 public class Televisori extends Prodotto {
 
     private String pollici;
-    private boolean smartTv;
+    private boolean isSmartTv;
 
-    public Televisori(String nome, String marca, BigDecimal prezzo, BigDecimal iva, String pollici, boolean smartTv) {
+    public Televisori(String nome, String marca, BigDecimal prezzo, BigDecimal iva, String pollici, boolean isSmartTv) {
         super(nome, marca, prezzo, iva);
         this.pollici = pollici;
-        this.smartTv = smartTv;
+        this.isSmartTv = isSmartTv;
 
     }
 
@@ -19,7 +19,12 @@ public class Televisori extends Prodotto {
     }
 
     public boolean isSmartTv() {
-        return this.smartTv;
+        return this.isSmartTv;
+    }
+
+    @Override
+    public String getNomeConCodice() {
+        return super.getNomeConCodice() + "\nPollici Tv : " + getPollici() + "\nSmart : " + isSmartTv();
     }
 
 }
