@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 public class Cuffie extends Prodotto {
 
     private String colore;
-    private boolean wireless;
+    private boolean isWireless;
 
-    public Cuffie(String nome, String marca, BigDecimal prezzo, BigDecimal iva, String colore, boolean wireless) {
+    public Cuffie(String nome, String marca, BigDecimal prezzo, BigDecimal iva, String colore, boolean isWireless) {
         super(nome, marca, prezzo, iva);
         this.colore = colore;
-        this.wireless = wireless;
+        this.isWireless = isWireless;
     }
 
     public String getColore() {
@@ -18,7 +18,12 @@ public class Cuffie extends Prodotto {
     }
 
     public boolean isWireless() {
-        return this.wireless;
+        return this.isWireless;
+    }
+
+    @Override
+    public String getNomeConCodice() {
+        return super.getNomeConCodice() + "\nColore : " + getColore() + "\nWireless : " + isWireless();
     }
 
 }
