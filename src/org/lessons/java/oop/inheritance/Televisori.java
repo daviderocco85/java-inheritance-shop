@@ -23,8 +23,8 @@ public class Televisori extends Prodotto {
     }
 
     @Override
-    public String getNomeConCodice() {
-        return super.getNomeConCodice() + "\nPollici Tv : " + getPollici() + "\nSmart : " + isSmartTv();
+    public String toString() {
+        return super.toString() + "\nPollici Tv : " + getPollici() + "\nSmart : " + isSmartTv();
     }
 
 }
