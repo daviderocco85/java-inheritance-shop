@@ -22,8 +22,8 @@ public class Cuffie extends Prodotto {
     }
 
     @Override
-    public String getNomeConCodice() {
-        return super.getNomeConCodice() + "\nColore : " + getColore() + "\nWireless : " + isWireless();
+    public String toString() {
+        return super.toString() + "\nColore : " + getColore() + "\nWireless : " + isWireless();
     }
 
 }
