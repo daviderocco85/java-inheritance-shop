@@ -77,8 +77,8 @@ public class Prodotto {
         return this.prezzo.add(this.prezzo.multiply(this.iva)).setScale(2, RoundingMode.DOWN);
     }
 
-    public String getNomeConCodice() {
-        return this.codice + "-" + this.nome;
+    public String toString() {
+        return String.format("%s - %s", this.codice, this.nome);
     }
 
 }
