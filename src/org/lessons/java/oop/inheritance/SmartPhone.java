@@ -22,8 +22,8 @@ public class SmartPhone extends Prodotto {
     }
 
     @Override
-    public String getNomeConCodice() {
-        return super.getNomeConCodice() + "\nCodiceImei : " + getCodiceImei() + "\nMemoriaGB : " + getMemoria();
+    public String toString() {
+        return super.toString() + "\nCodiceImei : " + getCodiceImei() + "\nMemoriaGB : " + getMemoria();
     }
 
 }
