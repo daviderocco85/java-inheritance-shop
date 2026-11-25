@@ -15,18 +15,6 @@ public class Carrello {
 
         while (continua) {
 
-            System.out.println("Quale prodotto vuoi inserire?");
-            System.out.println("1 - Smartphone");
-            System.out.println("2 - Televisore");
-            System.out.println("3 - Cuffie");
-
-            int scelta = Integer.parseInt(userInput.nextLine());
-
-            if (scelta < 1 || scelta > 3) {
-                System.out.println("Scelta non valida!");
-                continue;
-            }
-
             System.out.println("Inserisci il nome del prodotto:");
             String nome = userInput.nextLine();
 
@@ -37,7 +25,7 @@ public class Carrello {
 
             while (prezzo == null) {
 
-                System.out.println("Inserisci il prezzo:");
+                System.out.println("Inserisci il prezzo senza IVA:");
                 String inputPrezzo = userInput.nextLine();
 
                 if (inputPrezzo.matches("\\d+(\\.\\d+)?")) {
@@ -53,6 +41,18 @@ public class Carrello {
             BigDecimal iva = new BigDecimal("0.22");
 
             Prodotto nuovoProdotto = null;
+
+            System.out.println("A quale categoria appartiene il prodotto?");
+            System.out.println("1 - Smartphone");
+            System.out.println("2 - Televisore");
+            System.out.println("3 - Cuffie");
+
+            int scelta = Integer.parseInt(userInput.nextLine());
+
+            if (scelta < 1 || scelta > 3) {
+                System.out.println("Scelta non valida!");
+                continue;
+            }
 
             switch (scelta) {
 
@@ -85,13 +85,26 @@ public class Carrello {
                 case 2:
 
                     System.out.println("Inserisci i pollici del televisore:");
-                    String dimensione = userInput.nextLine();
+                    int pollici = -1;
 
-                    System.out.println("È una Smart TV? (si/no)");
+                    while (pollici == -1) {
+                        String inputPollici = userInput.nextLine();
+                        if (inputPollici.matches("\\d+") && Integer.parseInt(inputPollici) > 0) {
+
+                            pollici = Integer.parseInt(inputPollici);
+
+                        } else {
+
+                            System.out.println("Dimensioni TV non valida! Inserisci un numero.");
+
+                        }
+                    }
+
+                    System.out.println("È una Smart TV? (Inserisci si o no)");
                     boolean smartTv = userInput.nextLine().equalsIgnoreCase("si");
 
                     nuovoProdotto = new Televisori(
-                            nome, marca, prezzo, iva, dimensione, smartTv);
+                            nome, marca, prezzo, iva, pollici, smartTv);
 
                     break;
 
@@ -100,7 +113,7 @@ public class Carrello {
                     System.out.println("Inserisci il colore delle cuffie:");
                     String colore = userInput.nextLine();
 
-                    System.out.println("Le cuffie sono wireless? (si/no)");
+                    System.out.println("Le cuffie sono wireless? (Inserisci si o no)");
                     boolean wireless = userInput.nextLine().equalsIgnoreCase("si");
 
                     nuovoProdotto = new Cuffie(
@@ -134,18 +147,53 @@ public class Carrello {
             }
         }
 
+        System.out.println("Possiedi una tessera fedeltà? (si/no)");
+        boolean tesseraFedelta = userInput.nextLine().equalsIgnoreCase("si");
+
         // Stampa del carrello
         System.out.println("\n--- CONTENUTO DEL CARRELLO ---");
+
+        BigDecimal totale = BigDecimal.ZERO;
 
         for (int i = 0; i < carrello.length; i++) {
 
             System.out.println(carrello[i]);
 
-            System.out.println("Prezzo con IVA : "
-                    + carrello[i].getPrezzoIvato() + " Euro");
+            BigDecimal prezzoFinale;
+
+            if (tesseraFedelta) {
+
+                BigDecimal scontoApplicato = carrello[i].getPrezzo()
+                        .subtract(carrello[i].getPrezzoScontato());
+
+                System.out.println("Prezzo base: "
+                        + carrello[i].getPrezzo() + " Euro");
+
+                System.out.println("Sconto tessera fedeltà applicato: " + scontoApplicato + " Euro");
+
+                System.out.println("Prezzo con IVA: "
+                        + carrello[i].getPrezzoScontatoIvato() + " Euro");
+
+                prezzoFinale = carrello[i].getPrezzoScontatoIvato();
+
+            } else {
+
+                System.out.println("Prezzo base: "
+                        + carrello[i].getPrezzo() + " Euro");
+
+                System.out.println("Prezzo con IVA: "
+                        + carrello[i].getPrezzoIvato() + " Euro");
+
+                prezzoFinale = carrello[i].getPrezzoIvato();
+
+            }
+
+            totale = totale.add(prezzoFinale);
 
             System.out.println("-------------------------");
         }
+
+        System.out.println("TOTALE CARRELLO: " + totale + " Euro");
 
         userInput.close();
 
