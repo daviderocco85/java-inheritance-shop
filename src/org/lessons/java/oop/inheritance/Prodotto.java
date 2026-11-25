@@ -74,7 +74,19 @@ public class Prodotto {
     }
 
     public BigDecimal getPrezzoIvato() {
-        return this.prezzo.add(this.prezzo.multiply(this.iva)).setScale(2, RoundingMode.DOWN);
+        return this.prezzo.add(this.prezzo.multiply(this.iva)).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getPrezzoScontato() {
+        return this.prezzo
+                .multiply(new BigDecimal("0.98"))
+                .setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getPrezzoScontatoIvato() {
+        return getPrezzoScontato()
+                .multiply(BigDecimal.ONE.add(this.iva))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public String toString() {
